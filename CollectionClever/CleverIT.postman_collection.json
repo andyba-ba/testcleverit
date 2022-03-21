@@ -1,0 +1,1279 @@
+{
+	"info": {
+		"_postman_id": "a2000ef5-78a6-400c-a9d6-028158ac8f24",
+		"name": "CleverIT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Posts",
+			"item": [
+				{
+					"name": "GET Posts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Test that the Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test the data type of the response\", () => {",
+									"  pm.expect(jsonData).to.be.an(\"array\");",
+									"  pm.expect(jsonData[0].userId).to.be.an(\"number\");",
+									"  pm.expect(jsonData[0].id).to.be.an(\"number\");",
+									"  pm.expect(jsonData[0].title).to.be.a(\"string\");",
+									"  pm.expect(jsonData[0].body).to.be.a(\"string\");",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/posts",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Posts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.environment.set(\"id\", jsonData.id);",
+									"pm.environment.set(\"userId\",jsonData.userId);",
+									"",
+									"pm.test(\"Status code is 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Test the data type of the response\", () => {",
+									"  pm.expect(jsonData).to.be.an(\"object\");",
+									"  pm.expect(jsonData.title).to.be.a(\"string\");",
+									"  pm.expect(jsonData.body).to.be.a(\"string\");",
+									"  pm.expect(jsonData.userId).to.be.an(\"number\");",
+									"  pm.expect(jsonData.id).to.be.an(\"number\");",
+									"});",
+									"",
+									"pm.test(\"Test that the fields of the response are present\", () => {",
+									"    pm.response.to.have.jsonBody(\"userId\");",
+									"    pm.response.to.have.jsonBody(\"id\");",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"foo\",\n    \"body\": \"bar\",\n    \"userId\": 77\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/posts",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Posts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Test that the Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test the data type of the response\", () => {",
+									"  pm.expect(jsonData).to.be.an(\"object\");",
+									"  pm.expect(jsonData.title).to.be.a(\"string\");",
+									"  pm.expect(jsonData.body).to.be.a(\"string\");",
+									"  pm.expect(jsonData.userId).to.be.an(\"number\");",
+									"  pm.expect(jsonData.id).to.be.an(\"number\");",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"testAB\",\n\t\"body\": \"testAB\",\n\t\"userId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/posts/{{userId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"posts",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Posts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Test that the Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/posts/{{userId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"posts",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Posts by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Test that the Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test the data type of the response\", () => {",
+									"  pm.expect(jsonData).to.be.an(\"object\");",
+									"  pm.expect(jsonData.title).to.be.a(\"string\");",
+									"  pm.expect(jsonData.body).to.be.a(\"string\");",
+									"  pm.expect(jsonData.userId).to.be.an(\"number\");",
+									"  pm.expect(jsonData.id).to.be.an(\"number\");",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/posts/{{userId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"posts",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comments",
+			"item": [
+				{
+					"name": "GET Comments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Test that the Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test the data type of the response\", () => {",
+									"  pm.expect(jsonData).to.be.an(\"array\");",
+									"  pm.expect(jsonData[0].postId).to.be.an(\"number\");",
+									"  pm.expect(jsonData[0].id).to.be.an(\"number\");",
+									"  pm.expect(jsonData[0].name).to.be.a(\"string\");",
+									"  pm.expect(jsonData[0].email).to.be.a(\"string\");",
+									"  pm.expect(jsonData[0].body).to.be.a(\"string\");",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/comments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Comments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.environment.set(\"postId\", jsonData.postId);",
+									"",
+									"pm.test(\"Status code is 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Test the data type of the response\", () => {",
+									"  pm.expect(jsonData).to.be.an(\"object\");",
+									"  pm.expect(jsonData.postId).to.be.a(\"number\");",
+									"  pm.expect(jsonData.id).to.be.a(\"number\");",
+									"  pm.expect(jsonData.name).to.be.an(\"string\");",
+									"  pm.expect(jsonData.email).to.be.an(\"string\");",
+									"  pm.expect(jsonData.body).to.be.an(\"string\");",
+									"});",
+									"",
+									"pm.test(\"Test that the fields of the response are present\", () => {",
+									"    pm.response.to.have.jsonBody(\"postId\");",
+									"    pm.response.to.have.jsonBody(\"id\");",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"postId\": 1,\n    \"name\": \"Test\",\n    \"email\": \"Test@test.com\",\n    \"body\": \"Test Test AB\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/comments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Comments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test the data type of the response\", () => {",
+									"  pm.expect(jsonData).to.be.an(\"object\");",
+									"  pm.expect(jsonData.postId).to.be.a(\"number\");",
+									"  pm.expect(jsonData.id).to.be.a(\"number\");",
+									"  pm.expect(jsonData.name).to.be.an(\"string\");",
+									"  pm.expect(jsonData.email).to.be.an(\"string\");",
+									"  pm.expect(jsonData.body).to.be.an(\"string\");",
+									"});",
+									"",
+									"pm.test(\"Test that the fields of the response are present\", () => {",
+									"    pm.response.to.have.jsonBody(\"postId\");",
+									"    pm.response.to.have.jsonBody(\"id\");",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"postId\": 1,\n    \"id\": 1,\n    \"name\": \"TestAB\",\n    \"email\": \"Testab@testab.com\",\n    \"body\": \"Test Test AB\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/comments/{{postId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comments",
+								"{{postId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Comments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Test that the Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/comments/{{postId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comments",
+								"{{postId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Comments by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Test that the Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test the data type of the response\", () => {",
+									"  pm.expect(jsonData).to.be.an(\"object\");",
+									"  pm.expect(jsonData.postId).to.be.a(\"number\");",
+									"  pm.expect(jsonData.id).to.be.a(\"number\");",
+									"  pm.expect(jsonData.name).to.be.an(\"string\");",
+									"  pm.expect(jsonData.email).to.be.an(\"string\");",
+									"  pm.expect(jsonData.body).to.be.an(\"string\");",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/comments/{{postId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comments",
+								"{{postId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Albums",
+			"item": [
+				{
+					"name": "GET Albums",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Test that the Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test the data type of the response\", () => {",
+									"  pm.expect(jsonData).to.be.an(\"array\");",
+									"  pm.expect(jsonData[0].userId).to.be.an(\"number\");",
+									"  pm.expect(jsonData[0].id).to.be.an(\"number\");",
+									"  pm.expect(jsonData[0].title).to.be.a(\"string\");",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/albums",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"albums"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Albums",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.environment.set(\"userId\", jsonData.userId);",
+									"",
+									"pm.test(\"Status code is 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Test the data type of the response\", () => {",
+									"  pm.expect(jsonData).to.be.an(\"object\");",
+									"  pm.expect(jsonData.title).to.be.a(\"string\");",
+									"  pm.expect(jsonData.userId).to.be.an(\"number\");",
+									"  pm.expect(jsonData.id).to.be.an(\"number\");",
+									"});",
+									"",
+									"pm.test(\"Test that the fields of the response are present\", () => {",
+									"    pm.response.to.have.jsonBody(\"userId\");",
+									"    pm.response.to.have.jsonBody(\"id\");",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"foo\",\n    \"userId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/albums",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"albums"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Albums",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Test that the Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test the data type of the response\", () => {",
+									"  pm.expect(jsonData).to.be.an(\"object\");",
+									"  pm.expect(jsonData.title).to.be.a(\"string\");",
+									"  pm.expect(jsonData.body).to.be.a(\"string\");",
+									"  pm.expect(jsonData.userId).to.be.an(\"number\");",
+									"  pm.expect(jsonData.id).to.be.an(\"number\");",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n\t\"title\": \"test\",\n\t\"body\": \"bar\",\n\t\"userId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/albums/{{userId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"albums",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Albums",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Test that the Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/albums/{{id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"albums",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Albums by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Test that the Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test the data type of the response\", () => {",
+									"  pm.expect(jsonData).to.be.an(\"object\");",
+									"  pm.expect(jsonData.title).to.be.a(\"string\");",
+									"  pm.expect(jsonData.userId).to.be.an(\"number\");",
+									"  pm.expect(jsonData.id).to.be.an(\"number\");",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/albums/{{userId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"albums",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Photos",
+			"item": [
+				{
+					"name": "GET Photos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Test that the Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test the data type of the response\", () => {",
+									"  pm.expect(jsonData).to.be.an(\"array\");",
+									"  pm.expect(jsonData[0].albumId).to.be.an(\"number\");",
+									"  pm.expect(jsonData[0].id).to.be.an(\"number\");",
+									"  pm.expect(jsonData[0].title).to.be.a(\"string\");",
+									"  pm.expect(jsonData[0].url).to.be.a(\"string\");",
+									"  pm.expect(jsonData[0].thumbnailUrl).to.be.a(\"string\");",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/photos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"photos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Photos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.environment.set(\"id\", jsonData.id);",
+									"pm.environment.set(\"albumId\", jsonData.albumId);",
+									"",
+									"pm.test(\"Status code is 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Test the data type of the response\", () => {",
+									"  pm.expect(jsonData).to.be.an(\"object\");",
+									"  pm.expect(jsonData.albumId).to.be.a(\"number\");",
+									"  pm.expect(jsonData.id).to.be.a(\"number\");",
+									"  pm.expect(jsonData.title).to.be.an(\"string\");",
+									"  pm.expect(jsonData.url).to.be.an(\"string\");",
+									"  pm.expect(jsonData.thumbnailUrl).to.be.an(\"string\");",
+									"});",
+									"",
+									"pm.test(\"Test that the fields of the response are present\", () => {",
+									"    pm.response.to.have.jsonBody(\"albumId\");",
+									"    pm.response.to.have.jsonBody(\"id\");",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"albumId\": 1,\n    \"title\": \"Test AB\",\n    \"url\": \"https://test.com/123\",\n    \"thumbnailUrl\": \"https://test.com/123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/photos",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"photos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Photos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Test that the Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test the data type of the response\", () => {",
+									"  pm.expect(jsonData).to.be.an(\"object\");",
+									"  pm.expect(jsonData.albumId).to.be.a(\"number\");",
+									"  pm.expect(jsonData.id).to.be.a(\"number\");",
+									"  pm.expect(jsonData.title).to.be.an(\"string\");",
+									"  pm.expect(jsonData.url).to.be.an(\"string\");",
+									"  pm.expect(jsonData.thumbnailUrl).to.be.an(\"string\");",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"albumId\": 1,\n    \"title\": \"Test AB AB\",\n    \"url\": \"https://test.com/1234\",\n    \"thumbnailUrl\": \"https://test.com/1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/photos/{{albumId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"photos",
+								"{{albumId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Photos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Test that the Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/photos/{{id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"photos",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET Photos by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test the data type of the response\", () => {",
+									"  pm.expect(jsonData).to.be.an(\"object\");",
+									"  pm.expect(jsonData.albumId).to.be.a(\"number\");",
+									"  pm.expect(jsonData.id).to.be.a(\"number\");",
+									"  pm.expect(jsonData.title).to.be.an(\"string\");",
+									"  pm.expect(jsonData.url).to.be.an(\"string\");",
+									"  pm.expect(jsonData.thumbnailUrl).to.be.an(\"string\");",
+									"});",
+									"",
+									"pm.test(\"Test that the fields of the response are present\", () => {",
+									"    pm.response.to.have.jsonBody(\"albumId\");",
+									"    pm.response.to.have.jsonBody(\"id\");",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/photos/{{albumId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"photos",
+								"{{albumId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "GET Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Test that the Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test the data type of the response\", () => {",
+									"  pm.expect(jsonData).to.be.an(\"array\");",
+									"  pm.expect(jsonData[0].id).to.be.an(\"number\");",
+									"  pm.expect(jsonData[0].name).to.be.a(\"string\");",
+									"  pm.expect(jsonData[0].username).to.be.a(\"string\");",
+									"  pm.expect(jsonData[0].email).to.be.a(\"string\");",
+									"  pm.expect(jsonData[0].address).to.be.an(\"object\");",
+									"  pm.expect(jsonData[0].address.street).to.be.a(\"string\");",
+									"  pm.expect(jsonData[0].address.suite).to.be.a(\"string\");",
+									"  pm.expect(jsonData[0].address.city).to.be.a(\"string\");",
+									"  pm.expect(jsonData[0].address.zipcode).to.be.a(\"string\");",
+									"  pm.expect(jsonData[0].address.geo.lat).to.be.a(\"string\");",
+									"  pm.expect(jsonData[0].address.geo.lng).to.be.a(\"string\");",
+									"  pm.expect(jsonData[0].phone).to.be.a(\"string\");",
+									"  pm.expect(jsonData[0].website).to.be.a(\"string\");",
+									"  pm.expect(jsonData[0].company).to.be.a(\"object\");",
+									"  pm.expect(jsonData[0].company.name).to.be.a(\"string\");",
+									"  pm.expect(jsonData[0].company.catchPhrase).to.be.a(\"string\");",
+									"  pm.expect(jsonData[0].company.bs).to.be.a(\"string\");",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.environment.set(\"id\", jsonData.id);",
+									"",
+									"pm.test(\"Status code is 201\", () => {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Test the data type of the response\", () => {",
+									"  pm.expect(jsonData).to.be.an(\"object\");",
+									"  pm.expect(jsonData.name).to.be.a(\"string\");",
+									"  pm.expect(jsonData.username).to.be.a(\"string\");",
+									"  pm.expect(jsonData.email).to.be.an(\"string\");",
+									"  pm.expect(jsonData.address).to.be.an(\"object\");",
+									"  pm.expect(jsonData.phone).to.be.an(\"string\");",
+									"  pm.expect(jsonData.website).to.be.an(\"string\");",
+									"  pm.expect(jsonData.company).to.be.an(\"object\");",
+									"  pm.expect(jsonData.id).to.be.an(\"number\");",
+									"});",
+									"",
+									"pm.test(\"Test that the fields of the response are present\", () => {",
+									"    pm.response.to.have.jsonBody(\"id\");",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"name\": \"TestAB\",\n        \"username\": \"TestAB\",\n        \"email\": \"testab@testab.com\",\n        \"address\": {\n            \"street\": \"Test 1234\",\n            \"suite\": \"118\",\n            \"city\": \"CABA\",\n            \"zipcode\": \"1199\",\n            \"geo\": {\n                \"lat\": \"-37.3159\",\n                \"lng\": \"81.1496\"\n            }\n        },\n        \"phone\": \"549121929922\",\n        \"website\": \"test.com\",\n        \"company\": {\n            \"name\": \"test test\",\n            \"catchPhrase\": \"Test Legend\",\n            \"bs\": \"Test Legend By AB\"\n        }\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Test that the Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test the data type of the response\", () => {",
+									"  pm.expect(jsonData).to.be.an(\"object\");",
+									"  pm.expect(jsonData.name).to.be.a(\"string\");",
+									"  pm.expect(jsonData.username).to.be.a(\"string\");",
+									"  pm.expect(jsonData.email).to.be.an(\"string\");",
+									"  pm.expect(jsonData.address).to.be.an(\"object\");",
+									"  pm.expect(jsonData.phone).to.be.an(\"string\");",
+									"  pm.expect(jsonData.website).to.be.an(\"string\");",
+									"  pm.expect(jsonData.company).to.be.an(\"object\");",
+									"  pm.expect(jsonData.id).to.be.an(\"number\");",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"TestAB Put\",\n    \"username\": \"TestAB Put\",\n    \"email\": \"testab@testabput.com\",\n    \"address\": {\n        \"street\": \"Test 1234 Put\",\n        \"suite\": \"118 Put\",\n        \"city\": \"CABA Put\",\n        \"zipcode\": \"1199Put\",\n        \"geo\": {\n            \"lat\": \"-37.3159\",\n            \"lng\": \"81.1496\"\n        }\n    },\n    \"phone\": \"549121929922\",\n    \"website\": \"test.com.put\",\n    \"company\": {\n        \"name\": \"test test Put\",\n        \"catchPhrase\": \"Test Legend Put\",\n        \"bs\": \"Test Legend By AB Put\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/{{userId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Test that the Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/{{id}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET User by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Status code is 200\", () => {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Test the data type of the response\", () => {",
+									"  pm.expect(jsonData).to.be.an(\"object\");",
+									"  pm.expect(jsonData.name).to.be.a(\"string\");",
+									"  pm.expect(jsonData.username).to.be.a(\"string\");",
+									"  pm.expect(jsonData.email).to.be.an(\"string\");",
+									"  pm.expect(jsonData.address).to.be.an(\"object\");",
+									"  pm.expect(jsonData.phone).to.be.an(\"string\");",
+									"  pm.expect(jsonData.website).to.be.an(\"string\");",
+									"  pm.expect(jsonData.company).to.be.an(\"object\");",
+									"  pm.expect(jsonData.id).to.be.an(\"number\");",
+									"});",
+									"",
+									"pm.test(\"Test that the fields of the response are present\", () => {",
+									"    pm.response.to.have.jsonBody(\"id\");",
+									"});",
+									"",
+									"pm.test(\"Check Content-Type\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/{{userId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"{{userId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
